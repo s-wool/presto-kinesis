@@ -19,12 +19,12 @@ import io.airlift.json.JsonModule;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import com.facebook.presto.spi.Connector;
 import com.facebook.presto.spi.ConnectorFactory;
 import com.facebook.presto.spi.SchemaTableName;
 import com.facebook.presto.spi.type.TypeManager;
-import com.google.common.base.Supplier;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Binder;

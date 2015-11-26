@@ -22,7 +22,8 @@ import com.facebook.presto.spi.ColumnMetadata;
 import com.facebook.presto.spi.type.Type;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Objects;
+
+import java.util.Objects;
 
 public class KinesisStreamFieldDescription
 {
@@ -117,7 +118,7 @@ public class KinesisStreamFieldDescription
     @Override
     public int hashCode()
     {
-        return Objects.hashCode(name, type, mapping, dataFormat, formatHint, hidden);
+        return Objects.hash(name, type, mapping, dataFormat, formatHint, hidden);
     }
 
     @Override
@@ -131,12 +132,12 @@ public class KinesisStreamFieldDescription
         }
 
         KinesisStreamFieldDescription other = (KinesisStreamFieldDescription) obj;
-        return Objects.equal(this.name, other.name) &&
-                Objects.equal(this.type, other.type) &&
-                Objects.equal(this.mapping, other.mapping) &&
-                Objects.equal(this.dataFormat, other.dataFormat) &&
-                Objects.equal(this.formatHint, other.formatHint) &&
-                Objects.equal(this.hidden, other.hidden);
+        return Objects.equals(this.name, other.name) &&
+                Objects.equals(this.type, other.type) &&
+                Objects.equals(this.mapping, other.mapping) &&
+                Objects.equals(this.dataFormat, other.dataFormat) &&
+                Objects.equals(this.formatHint, other.formatHint) &&
+                Objects.equals(this.hidden, other.hidden);
     }
 
     @Override

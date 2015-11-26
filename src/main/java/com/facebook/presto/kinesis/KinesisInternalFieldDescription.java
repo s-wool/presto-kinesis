@@ -20,6 +20,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
 
+import java.util.Objects;
 import java.util.Set;
 
 import com.facebook.presto.spi.ColumnMetadata;
@@ -27,7 +28,6 @@ import com.facebook.presto.spi.type.BigintType;
 import com.facebook.presto.spi.type.BooleanType;
 import com.facebook.presto.spi.type.Type;
 import com.facebook.presto.spi.type.VarcharType;
-import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
 public class KinesisInternalFieldDescription
@@ -118,7 +118,7 @@ public class KinesisInternalFieldDescription
     @Override
     public int hashCode()
     {
-        return Objects.hashCode(name, type);
+        return Objects.hash(name, type);
     }
 
     @Override
@@ -132,8 +132,8 @@ public class KinesisInternalFieldDescription
         }
 
         KinesisInternalFieldDescription other = (KinesisInternalFieldDescription) obj;
-        return Objects.equal(this.name, other.name) &&
-                Objects.equal(this.type, other.type);
+        return Objects.equals(this.name, other.name) &&
+                Objects.equals(this.type, other.type);
     }
 
     @Override

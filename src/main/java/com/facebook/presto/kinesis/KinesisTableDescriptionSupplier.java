@@ -20,16 +20,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.weakref.jmx.internal.guava.base.Objects;
 
 import com.facebook.presto.kinesis.decoder.dummy.DummyKinesisRowDecoder;
 import com.facebook.presto.spi.SchemaTableName;
-import com.google.common.base.Supplier;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.io.Files;
+import java.nio.file.Files;
 import com.google.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -64,7 +64,7 @@ public class KinesisTableDescriptionSupplier
         try {
             for (File file : listFiles(kinesisConnectorConfig.getTableDescriptionDir())) {
                 if (file.isFile() && file.getName().endsWith(".json")) {
-                    KinesisStreamDescription table = streamDescriptionCodec.fromJson(Files.toByteArray(file));
+                    KinesisStreamDescription table = streamDescriptionCodec.fromJson(Files.readAllBytes(file.toPath()));
                     String schemaName = Objects.firstNonNull(table.getSchemaName(), kinesisConnectorConfig.getDefaultSchema());
                     log.debug("Kinesis table %s %s %s", schemaName, table.getTableName(), table);
                     builder.put(new SchemaTableName(schemaName, table.getTableName()), table);
