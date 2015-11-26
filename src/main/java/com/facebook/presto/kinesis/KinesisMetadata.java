@@ -26,7 +26,7 @@ import com.facebook.presto.spi.ColumnHandle;
 import com.facebook.presto.spi.ConnectorSession;
 import com.facebook.presto.spi.ConnectorTableHandle;
 import com.facebook.presto.spi.ConnectorTableMetadata;
-import com.facebook.presto.spi.ReadOnlyConnectorMetadata;
+import com.facebook.presto.spi.ConnectorMetadata;
 import com.facebook.presto.spi.SchemaTableName;
 import com.facebook.presto.spi.SchemaTablePrefix;
 import com.facebook.presto.spi.TableNotFoundException;
@@ -40,7 +40,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 public class KinesisMetadata
-        extends ReadOnlyConnectorMetadata
+        implements ConnectorMetadata
 {
     private static final Logger log = Logger.get(KinesisMetadata.class);
 
@@ -95,7 +95,7 @@ public class KinesisMetadata
     }
 
     @Override
-    public ConnectorTableMetadata getTableMetadata(ConnectorTableHandle tableHandle)
+    public ConnectorTableMetadata getTableMetadata(ConnectorSession session, ConnectorTableHandle tableHandle)
     {
         KinesisTableHandle kinesisTableHandle = handleResolver.convertTableHandle(tableHandle);
         return getTableMetadata(kinesisTableHandle.toSchemaTableName());
@@ -115,13 +115,7 @@ public class KinesisMetadata
     }
 
     @Override
-    public ColumnHandle getSampleWeightColumnHandle(ConnectorTableHandle tableHandle)
-    {
-        return null;
-    }
-
-    @Override
-    public Map<String, ColumnHandle> getColumnHandles(ConnectorTableHandle tableHandle)
+    public Map<String, ColumnHandle> getColumnHandles(ConnectorSession session, ConnectorTableHandle tableHandle)
     {
         KinesisTableHandle kinesisTableHandle = handleResolver.convertTableHandle(tableHandle);
 
@@ -161,7 +155,7 @@ public class KinesisMetadata
     }
 
     @Override
-    public ColumnMetadata getColumnMetadata(ConnectorTableHandle tableHandle, ColumnHandle columnHandle)
+    public ColumnMetadata getColumnMetadata(ConnectorSession session, ConnectorTableHandle tableHandle, ColumnHandle columnHandle)
     {
         handleResolver.convertTableHandle(tableHandle);
         KinesisColumnHandle kinesisColumnHandle = handleResolver.convertColumnHandle(columnHandle);

@@ -152,7 +152,7 @@ public class KinesisTableHandle
 
     public static String getSessionProperty(ConnectorSession session, String key)
     {
-        String value = session.getProperties().get(key);
+        String value = session.getProperty(key, String.class);
         if (value == null) {
             return "0";
         }

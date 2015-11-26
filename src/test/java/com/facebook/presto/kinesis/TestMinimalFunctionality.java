@@ -13,6 +13,7 @@
  */
 package com.facebook.presto.kinesis;
 
+import com.facebook.presto.spi.security.Identity;
 import io.airlift.log.Logger;
 
 import java.nio.ByteBuffer;
@@ -45,6 +46,7 @@ import static com.facebook.presto.spi.type.TimeZoneKey.UTC_KEY;
 import static java.util.Locale.ENGLISH;
 import static org.testng.Assert.assertTrue;
 import static com.facebook.presto.kinesis.util.TestUtils.createEmptyStreamDescription;
+import static com.facebook.presto.testing.TestingSession.testSessionBuilder;
 import static org.testng.Assert.assertEquals;
 
 @Test(singleThreaded = true)
@@ -52,8 +54,8 @@ public class TestMinimalFunctionality
 {
     private static final Logger log = Logger.get(TestMinimalFunctionality.class);
 
-        private static final Session SESSION = Session.builder()
-            .setUser("user")
+        private static final Session SESSION = testSessionBuilder()
+            .setIdentity(new Identity("user", Optional.empty()))
             .setSource("source")
             .setCatalog("kinesis")
             .setSchema("default")

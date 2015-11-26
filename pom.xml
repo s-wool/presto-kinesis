@@ -6,7 +6,7 @@
         <groupId>com.facebook.presto</groupId>
         <artifactId>presto-root</artifactId>
 	<!-- replace with the right version of presto -->
-        <version>0.105</version>
+        <version>0.125</version>
     </parent>
 
     <artifactId>presto-kinesis</artifactId>
