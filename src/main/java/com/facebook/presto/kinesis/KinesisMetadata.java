@@ -89,8 +89,7 @@ public class KinesisMetadata
                 schemaTableName.getSchemaName(),
                 schemaTableName.getTableName(),
                 table.getStreamName(),
-                getDataFormat(table.getMessage()),
-                session);
+                getDataFormat(table.getMessage()));
     }
 
     @Override

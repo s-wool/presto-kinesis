@@ -110,7 +110,6 @@ public class KinesisSplitManager
             KinesisShard kinesisShard = (KinesisShard) cp;
 
             KinesisSplit split = new KinesisSplit(connectorId,
-                        ((KinesisTableHandle) tableHandle).getSession(),
                         kinesisShard.getStreamName(),
                         kinesisTableHandle.getMessageDataFormat(),
                         kinesisShard.getPartitionId(),

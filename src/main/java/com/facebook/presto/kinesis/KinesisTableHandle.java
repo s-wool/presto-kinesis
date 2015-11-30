@@ -53,8 +53,6 @@ public class KinesisTableHandle
      */
     private final String streamName;
 
-    private final ConnectorSession session;
-
     private final String messageDataFormat;
 
     @JsonCreator
@@ -63,15 +61,13 @@ public class KinesisTableHandle
             @JsonProperty("schemaName") String schemaName,
             @JsonProperty("tableName") String tableName,
             @JsonProperty("streamName") String streamName,
-            @JsonProperty("messageDataFormat") String messageDataFormat,
-            @JsonProperty("session") ConnectorSession session)
+            @JsonProperty("messageDataFormat") String messageDataFormat)
     {
         this.connectorId = checkNotNull(connectorId, "connectorId is null");
         this.schemaName = checkNotNull(schemaName, "schemaName is null");
         this.tableName = checkNotNull(tableName, "tableName is null");
         this.streamName = checkNotNull(streamName, "topicName is null");
         this.messageDataFormat = checkNotNull(messageDataFormat, "messageDataFormat is null");
-        this.session = checkNotNull(session, "session is null");
     }
 
     @JsonProperty
@@ -102,12 +98,6 @@ public class KinesisTableHandle
     public String getMessageDataFormat()
     {
         return messageDataFormat;
-    }
-
-    @JsonProperty
-    public ConnectorSession getSession()
-    {
-        return session;
     }
 
     public SchemaTableName toSchemaTableName()

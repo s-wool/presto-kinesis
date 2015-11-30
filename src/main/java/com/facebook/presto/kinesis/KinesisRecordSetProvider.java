@@ -75,6 +75,6 @@ public class KinesisRecordSetProvider
         ImmutableList<KinesisColumnHandle> handles = handleBuilder.build();
         ImmutableMap<KinesisColumnHandle, KinesisFieldDecoder<?>> messageFieldDecoders = messageFieldDecoderBuilder.build();
 
-        return new KinesisRecordSet(kinesisSplit, clientManager, handles, messageDecoder, messageFieldDecoders, kinesisConnectorConfig);
+        return new KinesisRecordSet(kinesisSplit, clientManager, handles, messageDecoder, messageFieldDecoders, kinesisConnectorConfig, session);
     }
 }
