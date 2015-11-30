@@ -19,6 +19,7 @@ import io.airlift.log.Logger;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import com.facebook.presto.kinesis.decoder.dummy.DummyKinesisRowDecoder;
 import com.facebook.presto.spi.ColumnMetadata;
@@ -31,8 +32,6 @@ import com.facebook.presto.spi.SchemaTableName;
 import com.facebook.presto.spi.SchemaTablePrefix;
 import com.facebook.presto.spi.TableNotFoundException;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -48,7 +47,7 @@ public class KinesisMetadata
     private final KinesisConnectorConfig kinesisConnectorConfig;
     private final KinesisHandleResolver handleResolver;
 
-    private final Supplier<Map<SchemaTableName, KinesisStreamDescription>> kinesisTableDescriptionSupplier;
+    private final Map<SchemaTableName, KinesisStreamDescription> kinesisTableDescriptions;
     private final Set<KinesisInternalFieldDescription> internalFieldDescriptions;
 
     @Inject
@@ -64,7 +63,7 @@ public class KinesisMetadata
 
         log.debug("Loading kinesis table definitions from %s", kinesisConnectorConfig.getTableDescriptionDir().getAbsolutePath());
 
-        this.kinesisTableDescriptionSupplier = Suppliers.memoize(kinesisTableDescriptionSupplier);
+        this.kinesisTableDescriptions = kinesisTableDescriptionSupplier.get();
         this.internalFieldDescriptions = checkNotNull(internalFieldDescriptions, "internalFieldDescriptions is null");
     }
 
@@ -190,7 +189,7 @@ public class KinesisMetadata
     @VisibleForTesting
     Map<SchemaTableName, KinesisStreamDescription> getDefinedTables()
     {
-        return kinesisTableDescriptionSupplier.get();
+        return kinesisTableDescriptions;
     }
 
     private ConnectorTableMetadata getTableMetadata(SchemaTableName schemaTableName)
